@@ -1,0 +1,16 @@
+[
+    {
+        "suggestion_id": 2,
+        "text": "killer monkies",
+        "category": "Safety",
+        "location": "9th flat",
+        "urgency": "MEDIUM",
+        "reports": 1,
+        "votes": 1,
+        "affected": 59,
+        "status": "Resolved",
+        "upvoted_by": [
+            "student_661"
+        ]
+    }
+]
