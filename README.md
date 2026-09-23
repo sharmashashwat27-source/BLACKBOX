@@ -1,90 +1,91 @@
 BLACKBOX
-BLACKBOX is a Python desktop app made to make campus complaints less chaotic.
 
-Instead of students repeatedly complaining about the same thing separately, they can report an issue, upvote existing reports, and let the most important problems rise to the top. Admins get a priority-based dashboard where they can review issues, update their status, and handle them properly.
+BLACKBOX is a Python desktop app for reporting problems around campus.
 
-The idea is simple: make student feedback visible, organised, and easier to act on.
+The idea is pretty simple. Instead of students complaining about the same thing separately or sending messages in different group chats, they can put the issue in BLACKBOX and let other students upvote it if they have the same problem.
+
+Admins can then see the reported issues in one place, check which ones are affecting more students, and update them as they are handled.
 
 Features
+
 Student login using a 3-digit roll number and password
 
-Guest mode option
+Guest mode
 
-Password change feature for logged-in students
+Password change for logged-in students
 
-Report campus issues with category, location, and affected-student count
+Report issues with a category, location, and number of students affected
 
-Search and filter submitted issues
+Search and filter issues
 
-Upvote issues
+Upvote existing issues
 
-Prevent duplicate votes from the same student
+Students cannot vote for the same issue more than once
 
 Automatic priority calculation
 
-Low, Medium, and High priority labels
+Low, Medium, and High priority levels
 
 Separate admin dashboard
 
-Admin status updates: Pending, Under Review, In Progress, Resolved, and Rejected
+Admins can update issue status between Pending, Under Review, In Progress, Resolved, and Rejected
 
 Confirmation before deleting rejected issues
 
-JSON file storage so data remains after restarting the app
+JSON storage so the data stays after closing the app
 
-Priority system
-Issues are ranked using the following formula:
+Priority System
 
-text
+The priority score is calculated using:
+
 Priority Score = (Reports × 2) + Affected Students + Votes
-Score	Priority
-Less than 10	LOW
-10 to 24	MEDIUM
-25 or above	HIGH
-This means issues with more reports, votes, and affected students appear higher on the admin dashboard.
+
+Less than 10 is Low priority.
+
+10 to 24 is Medium priority.
+
+25 or more is High priority.
+
+This means an issue can become more important when more students report it, vote for it, or are affected by it.
 
 Files
-text
-BLACKBOX/
-├── main.py
-├── bbengine.py
-├── gui.py
-├── blackboxdata.json
-├── passwords.json
-└── README.md
-main.py contains the user and suggestion classes, including priority calculations.
+
+BLACKBOX contains main.py, bbengine.py, gui.py, blackboxdata.json, passwords.json, and README.md.
+
+main.py contains the User and Suggestion classes and the priority calculation.
 
 bbengine.py handles adding, saving, loading, ranking, and updating issues.
 
 gui.py contains the CustomTkinter interface.
 
-blackboxdata.json stores issue data.
+blackboxdata.json stores the issue data.
 
 passwords.json stores changed student passwords.
 
 Running the project
-Install CustomTkinter:
 
-bash
+First install CustomTkinter using:
+
 pip install customtkinter
+
 Then run:
 
-bash
 python gui.py
-Default student login format:
 
-text
-Roll Number: 001
-Password: 001123
+The default student login is roll number 001 with password 001123.
+
 For example, roll number 661 uses password 661123.
 
-Admin password:
+The admin password is admin123.
 
-text
-admin123
-These passwords are only for this local academic project. A real application should use secure authentication and password hashing.
+These passwords are only for this local project. A real application would need proper authentication and password hashing.
 
 Why BLACKBOX?
-Campus issues often get lost in group chats or are repeated by different students. BLACKBOX puts everything in one place, lets students support existing reports, and helps admins notice which problems need attention first.
 
-The project uses Python, CustomTkinter, JSON storage, and object-oriented programming to create a simple but functional campus issue tracker.
+Campus problems can easily get lost in group chats. Sometimes multiple people have the exact same complaint, but nobody really knows how many people are affected.
+
+BLACKBOX gives students one place to report problems and support existing reports. It also gives admins a clearer idea of which issues are getting the most attention.
+
+I made BLACKBOX to turn the usual "someone should tell the admin" situation into an actual system where someone can just report it and get it tracked.
+
+BLACKBOX is built using Python, CustomTkinter, JSON, and object-oriented programming.
