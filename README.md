@@ -1,91 +1,123 @@
-BLACKBOX
+# BLACKBOX
 
 BLACKBOX is a Python desktop app for reporting problems around campus.
 
-The idea is pretty simple. Instead of students complaining about the same thing separately or sending messages in different group chats, they can put the issue in BLACKBOX and let other students upvote it if they have the same problem.
+The idea is simple. Instead of students complaining about the same thing separately, or sending the same message in different group chats, they put the issue in BLACKBOX. Other students can upvote it if they have the same problem.
 
-Admins can then see the reported issues in one place, check which ones are affecting more students, and update them as they are handled.
+Admins then see every reported issue in one place, check which ones affect more students, and update them as they are handled.
 
-Features
+---
 
-Student login using a 3-digit roll number and password
+## Important: how to log in
 
-Guest mode
+Reviewers and anyone else running this project should **not guess the password**. Login depends on the JSON files shipped with the app.
 
-Password change for logged-in students
+1. Open `passwords.json` in the project folder.
+2. Use a roll number and password **from that file**.
+3. The admin password is also in that file (or the default below, if the file does not override it).
 
-Report issues with a category, location, and number of students affected
+`passwords.json` stores student passwords after they are set or changed. If that file is present, **it is the source of truth**. The examples in this README are only the starting scheme. A changed password in `passwords.json` will not match the default pattern.
 
-Search and filter issues
+`blackboxdata.json` stores the issues. It is not the login file. Do not use issue data as a password.
 
-Upvote existing issues
+### Default scheme (only if `passwords.json` has not changed that account)
 
-Students cannot vote for the same issue more than once
+| Role | What to type | Password |
+| --- | --- | --- |
+| Student | 3-digit roll number, for example `001` | roll number + `123`, so `001` uses `001123` |
+| Student | `661` | `661123` |
+| Admin | admin login | `admin123` |
 
-Automatic priority calculation
+Rules that usually cause a failed login:
 
-Low, Medium, and High priority levels
+- The roll number must be **exactly 3 digits**. Use `001`, not `1`.
+- Password is case-sensitive.
+- If you already changed a password inside the app, the new value is in `passwords.json`. Use that value.
+- These passwords are only for this local project. A real app would need proper authentication and password hashing.
 
-Separate admin dashboard
+If login still fails, open `passwords.json`, copy the password for that roll number exactly, and try again. You do not need to ask for a separate credential list. The JSON file is the credential list.
 
-Admins can update issue status between Pending, Under Review, In Progress, Resolved, and Rejected
+---
 
-Confirmation before deleting rejected issues
+## Features
 
-JSON storage so the data stays after closing the app
+- Student login using a 3-digit roll number and password
+- Guest mode
+- Password change for logged-in students
+- Report issues with a category, location, and number of students affected
+- Search and filter issues
+- Upvote existing issues
+- Students cannot vote for the same issue more than once
+- Automatic priority calculation
+- Low, Medium, and High priority levels
+- Separate admin dashboard
+- Admins can set status to Pending, Under Review, In Progress, Resolved, or Rejected
+- Confirmation before deleting rejected issues
+- JSON storage so data stays after the app is closed
 
-Priority System
+---
 
-The priority score is calculated using:
+## Priority system
 
+Priority score:
+
+```text
 Priority Score = (Reports × 2) + Affected Students + Votes
+```
 
-Less than 10 is Low priority.
+| Score | Priority |
+| --- | --- |
+| Less than 10 | Low |
+| 10 to 24 | Medium |
+| 25 or more | High |
 
-10 to 24 is Medium priority.
+An issue becomes more important when more students report it, vote for it, or are affected by it.
 
-25 or more is High priority.
+---
 
-This means an issue can become more important when more students report it, vote for it, or are affected by it.
+## Files
 
-Files
+| File | What it does |
+| --- | --- |
+| `main.py` | `User` and `Suggestion` classes, and the priority calculation |
+| `bbengine.py` | Adding, saving, loading, ranking, and updating issues |
+| `gui.py` | CustomTkinter interface. This is the file you run |
+| `blackboxdata.json` | Saved issues. Created or updated by the app |
+| `passwords.json` | Student passwords, including any password a student changed. **Check this file before logging in** |
+| `README.md` | This file |
 
-BLACKBOX contains main.py, bbengine.py, gui.py, blackboxdata.json, passwords.json, and README.md.
+You are expected to use the JSON files already in the project folder. Do not delete `passwords.json` or `blackboxdata.json` if you want the shipped accounts and issues. If `passwords.json` is missing, the app falls back to the default `roll + 123` scheme.
 
-main.py contains the User and Suggestion classes and the priority calculation.
+---
 
-bbengine.py handles adding, saving, loading, ranking, and updating issues.
+## Running the project
 
-gui.py contains the CustomTkinter interface.
+Install CustomTkinter:
 
-blackboxdata.json stores the issue data.
-
-passwords.json stores changed student passwords.
-
-Running the project
-
-First install CustomTkinter using:
-
+```bash
 pip install customtkinter
+```
 
-Then run:
+Run the app from the project folder (the same folder as the JSON files):
 
+```bash
 python gui.py
+```
 
-The default student login is roll number 001 with password 001123.
+Then:
 
-For example, roll number 661 uses password 661123.
+1. Open `passwords.json`.
+2. Log in as a student with a roll number and the matching password from that file.
+3. Or log in as admin with the admin password from that file, otherwise `admin123`.
 
-The admin password is admin123.
+---
 
-These passwords are only for this local project. A real application would need proper authentication and password hashing.
+## Why BLACKBOX?
 
-Why BLACKBOX?
+Campus problems get lost in group chats. Several people can have the same complaint, and nobody can see how many people are affected.
 
-Campus problems can easily get lost in group chats. Sometimes multiple people have the exact same complaint, but nobody really knows how many people are affected.
+BLACKBOX gives students one place to report a problem and support an existing report. It gives admins a clearer view of which issues are getting the most attention.
 
-BLACKBOX gives students one place to report problems and support existing reports. It also gives admins a clearer idea of which issues are getting the most attention.
+It turns the usual "someone should tell the admin" situation into a system where someone can report it and have it tracked.
 
-I made BLACKBOX to turn the usual "someone should tell the admin" situation into an actual system where someone can just report it and get it tracked.
-
-BLACKBOX is built using Python, CustomTkinter, JSON, and object-oriented programming.
+BLACKBOX is built with Python, CustomTkinter, JSON, and object-oriented programming.
